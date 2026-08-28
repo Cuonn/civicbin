@@ -1,0 +1,9 @@
+{
+  "short_name": "CivicBin",
+  "name": "CivicBin - Waste Management Reporting System",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#085041",
+  "background_color": "#ffffff"
+}
