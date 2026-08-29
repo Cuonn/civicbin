@@ -9,6 +9,7 @@ const ResidentBins = () => {
     const [loading, setLoading] = useState(true);
     const [reportingBinId, setReportingBinId] = useState(null);
     const [overflowing, setOverflowing] = useState(false);
+    const [notes, setNotes] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -33,12 +34,14 @@ const ResidentBins = () => {
     const openReportForm = (binId) => {
         setReportingBinId(binId);
         setOverflowing(false);
+        setNotes('');
         setSuccessMessage('');
     };
 
     const cancelReport = () => {
         setReportingBinId(null);
         setOverflowing(false);
+        setNotes('');
     };
 
     const submitReport = async (binId) => {
@@ -48,6 +51,7 @@ const ResidentBins = () => {
             setSuccessMessage('Report submitted successfully. Thank you!');
             setReportingBinId(null);
             setOverflowing(false);
+            setNotes('');
         } catch (error) {
             alert(error.response?.data?.message || 'Failed to submit report. Please try again.');
         } finally {
@@ -118,6 +122,13 @@ const ResidentBins = () => {
 
                             {reportingBinId === bin._id && (
                                 <div className="mt-3 pt-3 border-t">
+                                    <textarea
+                                        placeholder="Additional notes (optional)"
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)}
+                                        className="w-full p-2 border rounded mb-3 text-sm"
+                                        rows={2}
+                                    />
                                     <label className="flex items-center gap-2 mb-3">
                                         <input
                                             type="checkbox"
