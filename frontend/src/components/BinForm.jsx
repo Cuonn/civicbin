@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const BinForm = ({ editingBin, onSubmit, onCancel }) => {
-    const [formData, setFormData] = useState({ binId: '', location: '', type: 'General', fillStatus: 'Not Full' });
+    const [formData, setFormData] = useState({ binId: '', location: '', type: 'General', fillStatus: 'Not Full', nextCollectionDate: '' });
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -11,6 +11,7 @@ const BinForm = ({ editingBin, onSubmit, onCancel }) => {
                 location: editingBin.location,
                 type: editingBin.type,
                 fillStatus: editingBin.fillStatus,
+                nextCollectionDate: editingBin.nextCollectionDate ? editingBin.nextCollectionDate.split('T')[0] : '',
         });
         } else {
             setFormData({ binId: '', location: '', type: 'General', fillStatus: 'Not Full' });
@@ -66,6 +67,16 @@ const BinForm = ({ editingBin, onSubmit, onCancel }) => {
                 <option value="Not Full">Not Full</option>
                 <option value="Full">Full</option>
             </select>
+
+            <label className="block text-sm text-gray-600 mb-1">
+                Next Collection Date (optional)
+            </label>
+            <input
+                type="date"
+                value={formData.nextCollectionDate}
+                onChange={(e) => setFormData({ ...formData, nextCollectionDate: e.target.value })}
+                className="w-full p-2 border rounded mb-2"
+            />
 
             <div className="flex gap-2 mt-2">
                 <button type="submit" className="bg-civicbin-teal text-white px-4 py-2 rounded">

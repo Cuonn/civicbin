@@ -15,16 +15,20 @@ const BinTable = ({ bins, onEdit, onDelete}) => {
                     <th className="p-3">Location</th>
                     <th className="p-3">Type</th>
                     <th className="p-3">Fill Status</th>
+                    <th className="p-3">Next Collection</th>
                     <th className="p-3">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {bins.map((bin) => (
-                    <tr>
+                    <tr key={bin._id}>
                         <td className="p-3">{bin.binId}</td>
                         <td className="p-3">{bin.location}</td>
                         <td className="p-3">{bin.type}</td>
                         <td className="p-3">{bin.fillStatus}</td>
+                        <td className="p-3">
+                            {bin.nextCollectionDate ? new Date(bin.nextCollectionDate).toLocaleDateString() : 'Not scheduled'}
+                        </td>
                         <td className="p-3">
                             <button onClick={() => onEdit(bin)} className="mr-2 bg-yellow-500 text-white px-3 py-1 rounded">
                                 Edit
