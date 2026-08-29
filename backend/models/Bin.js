@@ -5,6 +5,7 @@ const binSchema = new mongoose.Schema({
     location: { type: String, required: true },
     type: { type: String, enum: ['General', 'Recycling'], required: true },
     fillStatus: { type: String, enum: ['Full', 'Not Full'], default: 'Not Full' },
+    nextCollectionDate: {type: Date, default: null},
 }, { timestamps: true });
 
 module.exports = mongoose.model('Bin', binSchema);
