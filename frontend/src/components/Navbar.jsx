@@ -24,7 +24,7 @@ const Navbar = () => {
             ) : (
                 <>
                     <Link to="/bins" className="mr-4">Nearby Bins</Link>
-                    <Link to="/my_reports" className="mr-4">My Reports</Link>
+                    <Link to="/my-reports" className="mr-4">My Reports</Link>
                 </>
             )}
             <button

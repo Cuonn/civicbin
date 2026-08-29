@@ -4,9 +4,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { useAuth } from './context/AuthContext';
 import CoordinatorBins from './pages/CoordinatorBins';
-
-const ResidentHome = () => <div className="p-6">Nearby Bins (Residents) - Coming soon</div>;
-const CoordinatorHome = () => <div className="p-6">Manage Bins (Coordinator) - Coming soon</div>;
+import ResidentBins from './pages/ResidentBins';
+import MyReports from './pages/MyReports';
 
 const ProtectedRoute = ({children}) => {
     const { user } = useAuth();
@@ -25,7 +24,15 @@ function App() {
             path="/bins"
             element={
                 <ProtectedRoute>
-                    <ResidentHome />
+                    <ResidentBins />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/my-reports"
+            element={
+                <ProtectedRoute>
+                    <MyReports />
                 </ProtectedRoute>
             }
         />
