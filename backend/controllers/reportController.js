@@ -9,6 +9,7 @@ const createReport = async (req, res) => {
             bin,
             resident: req.user.id,
             overflowing: overflowing || false, 
+            notes: notes || '',
         });
 
         res.status(201).json(report);
