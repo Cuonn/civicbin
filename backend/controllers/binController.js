@@ -2,12 +2,12 @@ const Bin = require('../models/Bin');
 
 const createBin = async (req, res) => {
     try {
-        const { binId, location, type, fillStatus } = req.body;
+        const { binId, location, type, fillStatus, nextCollectionDate } = req.body;
 
         if (!binId?.trim()) return res.status(400).json({ message: 'Bin ID is required' });
         if (!location?.trim()) return res.status(400).json({ message: 'Location is required' });
 
-        const bin = await Bin.create({ binId, location, type, fillStatus });
+        const bin = await Bin.create({ binId, location, type, fillStatus, nextCollectionDate: nextCollectionDate || null });
         res.status(201).json(bin);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -28,10 +28,11 @@ const updateBin = async (req, res) => {
         const bin = await Bin.findById(req.params.id);
         if (!bin) return res.status(404).json({ message: 'Bin not found' });
 
-        const { location, type, fillStatus } = req.body;
+        const { location, type, fillStatus, nextCollectionDate } = req.body;
         if (location) bin.location = location;
         if (type) bin.type = type;
         if (fillStatus) bin.fillStatus = fillStatus;
+        if (nextCollectionDate !== undefined) bin.nextCollectionDate = nextCollectionDate || null;
 
         const updatedBin = await bin.save();
         res.json(updatedBin);
