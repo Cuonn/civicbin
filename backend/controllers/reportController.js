@@ -2,7 +2,7 @@ const Report = require('../models/Report');
 
 const createReport = async (req, res) => {
     try {
-        const { bin, overflowing } = req.body;
+        const { bin, overflowing, notes } = req.body;
         if (!bin) return res.status(400).json({ message: 'Bin is required'});
 
         const report = await Report.create({

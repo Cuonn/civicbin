@@ -47,7 +47,7 @@ const ResidentBins = () => {
     const submitReport = async (binId) => {
         setSubmitting(true);
         try {
-            await axiosInstance.post('/api/reports', { bin: binId, overflowing }, authHeader);
+            await axiosInstance.post('/api/reports', { bin: binId, overflowing, notes }, authHeader);
             setSuccessMessage('Report submitted successfully. Thank you!');
             setReportingBinId(null);
             setOverflowing(false);
