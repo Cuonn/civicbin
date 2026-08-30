@@ -40,7 +40,7 @@ const MyReports = () => {
             alert(error.response?.data?.message || 'Failed to delete report.');
         }
     };
-    
+
     if (loading) return <div className="p-6 text-center">Loading your reports...</div>;
 
     return (
@@ -63,17 +63,20 @@ const MyReports = () => {
                                     Submitted: {new Date(report.createdAt).toLocaleString()}
                                 </p>
                                 {report.overflowing && <p className="text-sm text-red-600 font-medium">Marked as overflowing</p>}
+                                {report.notes && <p className='text-sm text-gray-700 mt-1'>Notes: {report.notes}</p>}
                             </div>
                             <div className="flex items-center gap-3">
                                 <span className={`px-3 py-1 rounded text-white text-sm font-medium ${statusColor[report.status]}`}>
                                     {report.status}
                                 </span>
-                                <button
-                                    onClick={() => handleDelete(report._id)}
-                                    className="bg-red-500 text-white px-3 py-1 rounded text-sm"
-                                >
-                                    Delete
-                                </button>
+                                {report.status === 'Pending' && (
+                                    <button
+                                        onClick={() => handleDelete(report._id)}
+                                        className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))}

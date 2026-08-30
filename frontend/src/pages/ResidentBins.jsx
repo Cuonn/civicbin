@@ -9,6 +9,7 @@ const ResidentBins = () => {
     const [loading, setLoading] = useState(true);
     const [reportingBinId, setReportingBinId] = useState(null);
     const [overflowing, setOverflowing] = useState(false);
+    const [notes, setNotes] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -33,21 +34,24 @@ const ResidentBins = () => {
     const openReportForm = (binId) => {
         setReportingBinId(binId);
         setOverflowing(false);
+        setNotes('');
         setSuccessMessage('');
     };
 
     const cancelReport = () => {
         setReportingBinId(null);
         setOverflowing(false);
+        setNotes('');
     };
 
     const submitReport = async (binId) => {
         setSubmitting(true);
         try {
-            await axiosInstance.post('/api/reports', { bin: binId, overflowing }, authHeader);
+            await axiosInstance.post('/api/reports', { bin: binId, overflowing, notes }, authHeader);
             setSuccessMessage('Report submitted successfully. Thank you!');
             setReportingBinId(null);
             setOverflowing(false);
+            setNotes('');
         } catch (error) {
             alert(error.response?.data?.message || 'Failed to submit report. Please try again.');
         } finally {
@@ -92,7 +96,7 @@ const ResidentBins = () => {
                         <div key={bin._id} className="bg-white shadow-md rounded p-4">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="font-bold">{bin.binId} — {bin.location}</p>
+                                    <p className="font-bold">{bin.binId} - {bin.location}</p>
                                     <p className="text-sm text-gray-600">Type: {bin.type}</p>
                                     <p className="text-sm text-gray-600">
                                         Next collection:{' '}
@@ -118,6 +122,13 @@ const ResidentBins = () => {
 
                             {reportingBinId === bin._id && (
                                 <div className="mt-3 pt-3 border-t">
+                                    <textarea
+                                        placeholder="Additional notes (optional)"
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)}
+                                        className="w-full p-2 border rounded mb-3 text-sm"
+                                        rows={2}
+                                    />
                                     <label className="flex items-center gap-2 mb-3">
                                         <input
                                             type="checkbox"

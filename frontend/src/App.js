@@ -6,6 +6,7 @@ import { useAuth } from './context/AuthContext';
 import CoordinatorBins from './pages/CoordinatorBins';
 import ResidentBins from './pages/ResidentBins';
 import MyReports from './pages/MyReports';
+import ReportsQueue from './pages/ReportsQueue';
 
 const ProtectedRoute = ({children}) => {
     const { user } = useAuth();
@@ -41,6 +42,14 @@ function App() {
             element={
                 <ProtectedRoute>
                     <CoordinatorBins />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/coordinator/reports"
+            element={
+                <ProtectedRoute>
+                    <ReportsQueue />
                 </ProtectedRoute>
             }
         />
