@@ -39,6 +39,10 @@ const deleteReport = async (req, res) => {
             return res.status(403).json({ message: 'You can only delete your own reports' });
         }
 
+        if (report.status !== 'Pending') {
+            return res.status(400).json({ message: 'Only pending reports can be deleted' });
+        }
+        
         await report.deleteOne();
         res.json({ message: 'Report deleted successfully' });
     } catch (error) {
@@ -63,4 +67,28 @@ const getAllReports = async (req, res) => {
     }
 }
 
-module.exports = { createReport, getMyReports, deleteReport, getAllReports };
+const updateReportStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!['Confirmed', 'Rejected'].includes(status)) {
+            return res.status(400).json({ message: 'Status must be Confirmed or Rejected' });
+        }
+
+        const report = await Report.findById(req.params.id);
+        if (!report) return res.status(404).json({ message: 'Report not found' });
+
+        if (report.status !== 'Pending') {
+            return res.status(400).json({ message: 'Only pending reports can be updated' });
+        }
+
+        report.status = status;
+        const updatedReport = await Report.findById(report._id)
+            .populate('bin', 'binId location type')
+            .populate('resident', 'name email');
+        res.json(updatedReport);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { createReport, getMyReports, deleteReport, getAllReports, updateReportStatus };
