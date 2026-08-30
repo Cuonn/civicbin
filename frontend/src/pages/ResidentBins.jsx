@@ -96,7 +96,7 @@ const ResidentBins = () => {
                         <div key={bin._id} className="bg-white shadow-md rounded p-4">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="font-bold">{bin.binId} — {bin.location}</p>
+                                    <p className="font-bold">{bin.binId} - {bin.location}</p>
                                     <p className="text-sm text-gray-600">Type: {bin.type}</p>
                                     <p className="text-sm text-gray-600">
                                         Next collection:{' '}

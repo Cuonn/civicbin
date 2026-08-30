@@ -46,4 +46,21 @@ const deleteReport = async (req, res) => {
     }
 };
 
-module.exports = { createReport, getMyReports, deleteReport };
+const getAllReports = async (req, res) => {
+    try {
+        const { overflowing } = req.query;
+        const filter = {};
+        if (overflowing === 'true') filter.overflowing = true;
+
+        const reports = await Report.find(filter)
+            .populate('bin', 'binId location type notes')
+            .populate('resident', 'name email')
+            .sort({ createdAt: -1 });
+        
+        res.json(reports);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { createReport, getMyReports, deleteReport, getAllReports };
