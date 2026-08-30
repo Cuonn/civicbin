@@ -69,12 +69,14 @@ const MyReports = () => {
                                 <span className={`px-3 py-1 rounded text-white text-sm font-medium ${statusColor[report.status]}`}>
                                     {report.status}
                                 </span>
-                                <button
-                                    onClick={() => handleDelete(report._id)}
-                                    className="bg-red-500 text-white px-3 py-1 rounded text-sm"
-                                >
-                                    Delete
-                                </button>
+                                {report.status === 'Pending' && (
+                                    <button
+                                        onClick={() => handleDelete(report._id)}
+                                        className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))}

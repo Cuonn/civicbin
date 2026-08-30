@@ -30,6 +30,20 @@ const ReportsQueue = () => {
         }
     };
 
+    const handleStatusUpdate = async (reportId, status) => {
+        try {
+            const response = await axiosInstance.patch(
+                `/api/reports/${reportId}/status`,
+                { status },
+                authHeader
+            );
+            setReports(reports.map((r) => (r._id === reportId ? response.data : r)));
+            setSelectedReport(response.data);
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to update report status.');
+        }
+    };
+
     useEffect(() => {
         fetchReports();
     }, [overflowOnly]);
@@ -98,6 +112,23 @@ const ReportsQueue = () => {
                         <p className="mb-1"><span className="font-medium">Notes:</span> {selectedReport.notes || 'None'}</p>
                         <p className="mb-1"><span className="font-medium">Status:</span> {selectedReport.status}</p>
                         <p className="mb-3"><span className="font-medium">Submitted:</span> {new Date(selectedReport.createdAt).toLocaleString()}</p>
+
+                        {selectedReport.status === 'Pending' && (
+                            <div className="flex gap-2 mb-3">
+                                <button
+                                    onClick={() => handleStatusUpdate(selectedReport._id, 'Confirmed')}
+                                    className="bg-green-500 text-white px-4 py-2 rounded"
+                                >
+                                    Confirm
+                                </button>
+                                <button
+                                    onClick={() => handleStatusUpdate(selectedReport._id, 'Rejected')}
+                                    className="bg-red-500 text-white px-4 py-2 rounded"
+                                >
+                                    Reject
+                                </button>
+                            </div>
+                        )}
 
                         <button
                             onClick={() => setSelectedReport(null)}
