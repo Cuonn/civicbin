@@ -82,6 +82,8 @@ const updateReportStatus = async (req, res) => {
         }
 
         report.status = status;
+
+        await report.save();
         const updatedReport = await Report.findById(report._id)
             .populate('bin', 'binId location type')
             .populate('resident', 'name email');
