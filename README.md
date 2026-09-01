@@ -56,4 +56,4 @@ To create a Coordinator account:
 - Coordinator accounts are provisioned manually via MongoDB Compass; there is no public Coordinator self-registration.
 
 ### Deployment URL
-http://<3.27.125.231>:3000
+http://13.236.86.194:3000
